@@ -1,0 +1,154 @@
+<div class="px-4 py-5 my-5 text-center">
+  <h1 class="display-5 fw-bold">Lottery dApp</h1>
+  <div class="col-lg-6 mx-auto">
+
+    <div *ngIf="!wallet" class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <button (click)="createWallet()" type="button" class="btn btn-success btn-lg px-4 gap-3">
+        Create Wallet
+      </button>
+      <button disabled type="button" class="btn btn-info btn-lg px-4 gap-3">
+        Import Wallet
+      </button>
+      <button disabled type="button" class="btn btn-danger btn-lg px-4 gap-3">
+        Connect Wallet
+      </button>
+    </div>
+    <!-- <button (click)="updateValues()" type="button" class="btn btn-success btn-lg px-4 gap-3 my-4">
+      Refresh
+    </button> -->
+
+    <p *ngIf="wallet"> Your wallet address is: {{wallet.address}}</p>
+    <p *ngIf="wallet"> The lottery address is: {{lotteryAddress}} </p>
+    <p *ngIf="wallet"> The token address is: {{tokenAddress}} </p>
+
+    <div *ngIf="wallet">
+
+      <div class="d-grid gap-2 my-4">
+        <button (click)="updateValues()" type="button"
+          class="btn btn-primary btn-block">
+          Refresh
+        </button>
+      </div>
+
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-4">
+        <div class="card">
+          <div class="card-body">
+            Your ETH balance is: <br>
+            {{ethBalance}}
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            Your token balance is: <br>
+            {{tokenBalance}}
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            Your prize available to withdraw is: <br>
+            {{prizeBalance}}
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!lotteryContract">
+        <input #inputLotteryAddress type="text" class="form-control my-4" placeholder="Paste the lottery address here">
+        <button (click)="connectLottery(inputLotteryAddress.value)" type="button"
+          class="btn btn-success btn-block px-4 gap-3">
+          Connect lottery
+        </button>
+      </div>
+
+      <div *ngIf="lotteryContract">
+
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-4">
+          <div class="card">
+            <div class="card-body">
+              Token ratio:
+              {{purchaseRatio}}
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              Bet price:
+              {{betPrice}}
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              Bet fee:
+              {{betFee}}
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-4">
+          <div class="card">
+            <div class="card-body">
+              Lottery state: <br>
+              {{lotteryState}}
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              The last block was mined at: <br>
+              {{currentBlockDateString}}
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              The lottery should close at: <br>
+              {{closingTimeDateString}}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button (click)="closeLottery()" type="button"
+            class="btn btn-success btn-block px-4 gap-3">
+            Close lottery
+          </button>
+        </div>
+        <p *ngIf="closeError">{{closeError}}</p>
+
+        <div>
+          <input #inputBuyAmount type="text" class="form-control my-4" placeholder="Enter the amount of tokens to buy here">
+          <button (click)="buyTokens(inputBuyAmount.value)" type="button"
+            class="btn btn-success btn-block px-4 gap-3">
+            Buy tokens
+          </button>
+        </div>
+        <p *ngIf="buyError">{{buyError}}</p>
+
+        <div>
+          <input #inputBetAmount type="text" class="form-control my-4" placeholder="Enter the number of times to bet here">
+          <button (click)="bet(inputBetAmount.value)" type="button"
+            class="btn btn-success btn-block px-4 gap-3">
+            Bet
+          </button>
+        </div>
+        <p *ngIf="betError">{{betError}}</p>
+
+        <div>
+          <input #inputClaimAmount type="text" class="form-control my-4" placeholder="Enter the amount of tokens to claim here">
+          <button (click)="claimPrize(inputClaimAmount.value)" type="button"
+            class="btn btn-success btn-block px-4 gap-3">
+            Claim prize
+          </button>
+        </div>
+        <p *ngIf="claimError">{{claimError}}</p>
+
+        <div>
+          <input #inputBurnAmount type="text" class="form-control my-4" placeholder="Enter the amount of tokens to burn here">
+          <button (click)="burnTokens(inputBurnAmount.value)" type="button"
+            class="btn btn-success btn-block px-4 gap-3">
+            Burn tokens
+          </button>
+        </div>
+        <p *ngIf="burnError">{{burnError}}</p>
+
+      </div>
+
+    </div>
+  </div>
+</div>
